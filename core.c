@@ -8,7 +8,8 @@
  *
  * Return: exit code (success) or (eles)
  */
-int main(int ac, char **av, char **env)
+/*int main(int ac, char **av, char **env)*/
+int main(int ac, char **av)
 {
 	char rd[RD_BUF];
 	int r, fd = STDIN_FILENO;
@@ -49,4 +50,4 @@ int main(int ac, char **av, char **env)
 	} while (interactive);
 
 	return (0);
-}
+
