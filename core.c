@@ -1,9 +1,17 @@
 #include "main.h"
 
+/**
+ * main - goal of the program is to make a simple shell
+ * @ac: number of words written  when calling the shell
+ * @av: array of the given words when calling the shell
+ * @env: array of environment variables
+ *
+ * Return: exit code (success) or (eles)
+ */
 int main(int ac, char **av, char **env)
 {
 	char rd[RD_BUF];
-	int r , fd = STDIN_FILENO;
+	int r, fd = STDIN_FILENO;
 	int interactive = 1;
 
 	if (isatty(fd) != 1 || ac > 1)
@@ -25,9 +33,16 @@ int main(int ac, char **av, char **env)
 				perror(av[0]);
 
 			/*
-			make_args();
-			fork();
-			exec();
+			strtoav(rd, ch_av, AV_BUF);
+			path = find_path(ch_av[0]);
+			if (path != NULL)
+				ch_id = fork();
+				if (ch_id < 0)
+					perror();
+				else if (ch_id == 0)
+					execve(path, ch_av, env);
+				else
+					wait(&ch_stat);
 			*/
 		}
 

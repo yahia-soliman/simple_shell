@@ -15,6 +15,8 @@
 
 
 void *memset0(void *ptr, size_t size);
+void strtoav(char *str, char **av, unsigned int size);
+char *find_path(char *av0);
 
 
 #endif /* SIMPLE_SHELL_HEAD */

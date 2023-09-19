@@ -1,5 +1,5 @@
 /**
- * strset0 - sets memory to 0 in each byte
+ * memset0 - sets memory to 0 in each byte
  * @ptr: the address of the first byte
  * @n: number of bytes to set to 0
  * Return: same as @ptr
