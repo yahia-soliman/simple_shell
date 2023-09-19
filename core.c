@@ -14,8 +14,8 @@ int wr_int(int n);
  */
 int main(int ac, char **av, char **env)
 {
-	char *path, rd[RD_BUF], *ch_av[AV_BUF];
-	int r, fd = STDIN_FILENO;
+	char *path, rd[RD_BUF] = {0}, *ch_av[AV_BUF] = {0};
+	int r = 0, fd = STDIN_FILENO;
 	int ch_id, ch_stat, in_mode = 1, n_cmd = 1;
 
 	set_mode(ac, av, &in_mode, &fd);
