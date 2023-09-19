@@ -4,6 +4,7 @@
  * main - purpose is to test
  * @i:   number of arguments
  * @av:  array  of arguments
+ * Return: zero
  */
 int main(int i, char **av)
 {
