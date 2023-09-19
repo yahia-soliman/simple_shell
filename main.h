@@ -18,6 +18,7 @@
 void strtoav(char *str, char **av);
 void free_av(char **av);
 char *find_path(char *av0, char **env);
+int built_in(char **av, char **env);
 
 
 #endif /* SIMPLE_SHELL_HEAD */
