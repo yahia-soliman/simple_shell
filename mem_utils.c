@@ -11,5 +11,5 @@ void *memset0(void *ptr, unsigned int n)
 	while (n--)
 		*(cptr + n) = 0;
 
-	return (ptr);
+	return ((void *)ptr);
 }

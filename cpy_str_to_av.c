@@ -10,14 +10,14 @@ void strtoav(char *str, char **av)
 {
 	int n = 0, i = 0, w, j;
 
-	while (str[i] != 0)
+	while (str[i] != '\0' && str[i] != '\n')
 	{
 		if (str[i] == ' ')
 			i++;
 		else
 		{
 			w = i;
-			while (str[i] != ' ' && str[i])
+			while (str[i] != ' ' && str[i] != '\0' && str[i] != '\n')
 				i++;
 			av[n] = malloc((1 + i - w) * sizeof(char));
 
