@@ -21,7 +21,7 @@ int main(int ac, char **av, char **env)
 	set_mode(ac, av, &in_mode, &fd);
 	do {
 		if (in_mode)
-			r = write(STDOUT_FILENO, "($) ", 4);
+			r = write(STDOUT_FILENO, "#cisfun$ ", 9);
 
 		memset0(ch_av, sizeof(char *) * AV_BUF);
 		r = RD_BUF;
