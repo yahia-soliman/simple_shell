@@ -23,11 +23,8 @@ void print_env(char **env)
  */
 void exit_sh(char **av)
 {
-	if (av[1] == NULL)
-	{
 		free_av(av);
 		exit(0);
-	}
 }
 
 /**

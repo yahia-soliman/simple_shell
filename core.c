@@ -14,9 +14,8 @@ int wr_int(int n);
  */
 int main(int ac, char **av, char **env)
 {
-	char *path, rd[RD_BUF] = {0}, *ch_av[AV_BUF] = {0};
-	int r = 0, fd = STDIN_FILENO;
-	int ch_id, ch_stat, in_mode = 1, n_cmd = 1;
+	char not_last = 1, *path, rd[RD_BUF] = {0}, *ch_av[AV_BUF] = {0};
+	int r = 0, fd = STDIN_FILENO, ch_id, ch_stat, in_mode = 1, n_cmd = 1;
 
 	set_mode(ac, av, &in_mode, &fd);
 	do {
@@ -25,16 +24,16 @@ int main(int ac, char **av, char **env)
 
 		memset0(ch_av, sizeof(char *) * AV_BUF);
 		r = RD_BUF;
-		while (r != EOF && r == RD_BUF && (rd[RD_BUF - 1] != '\n'))
-		{
+	while (r != EOF && r == RD_BUF)
+	{
 			memset0(rd, sizeof(char) * RD_BUF);
 			r = read(fd, rd, RD_BUF);
 			if (r < 0)
 				perror(av[0]);
-
-			strtoav(rd, ch_av);
-			if (*ch_av)
-			{
+		do {
+			not_last = strtoav(rd, ch_av);
+		if (*ch_av)
+		{
 				if (built_in(ch_av, env))
 					continue;
 			path = find_path(ch_av[0], env);
@@ -55,8 +54,9 @@ int main(int ac, char **av, char **env)
 			else
 				w_err(*av, *ch_av, n_cmd);
 			free_av(ch_av);
-			}
 		}
+		} while (not_last && r != EOF);
+	}
 	} while (in_mode && n_cmd++);
 
 	if (fd > 2)
