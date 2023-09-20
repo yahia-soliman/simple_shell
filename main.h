@@ -12,7 +12,7 @@
 
 
 #define RD_BUF 10240
-#define AV_BUF 10
+#define AV_BUF 32
 
 
 char strtoav(char *str, char **av);

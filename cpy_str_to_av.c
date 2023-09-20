@@ -13,7 +13,7 @@ char strtoav(char *str, char **av)
 	int comment = 0, n = 0, w, wi, c, len;
 	static int i = 1;
 
-	if (i == 1)
+	if (i == 1 && str[i])
 		i = 0;
 	c = !(is_end(str[i]));
 	len = RD_BUF;

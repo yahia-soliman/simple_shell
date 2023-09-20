@@ -55,6 +55,8 @@ int run_all(char *rd, char **av, char **env, int n_cmd)
 	static int ch_stat = 1;
 	char *path, *ch_av[AV_BUF] = {0};
 
+	if (n_cmd == 1)
+		ch_stat = 0;
 	memset0(ch_av, sizeof(char *) * AV_BUF);
 	do {
 		not_last = strtoav(rd, ch_av);
@@ -82,8 +84,9 @@ int run_all(char *rd, char **av, char **env, int n_cmd)
 			}
 			else
 			{
+			if (av[0])
 				ch_stat = 127;
-				w_err(*av, *ch_av, n_cmd);
+			w_err(*av, *ch_av, n_cmd);
 			}
 			}
 			free_av(ch_av);
@@ -106,7 +109,12 @@ void set_mode(int ac, char **av, int *mode, int *fd)
 	if (ac > 1)
 		*fd = open(av[1], O_RDONLY);
 	if (*fd < 0)
-		perror(av[0]);
+	{
+		write(STDOUT_FILENO, av[0], str_len(av[0]));
+		write(STDOUT_FILENO, ": ", 2);
+		perror(av[1]);
+		exit(127);
+	}
 }
 
 /**
