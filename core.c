@@ -110,7 +110,7 @@ void set_mode(int ac, char **av, int *mode, int *fd)
 		*fd = open(av[1], O_RDONLY);
 	if (*fd < 0)
 	{
-		write(STDOUT_FILENO, av[0], str_len(av[0]));
+		write(STDERR_FILENO, av[0], str_len(av[0]));
 		write(STDOUT_FILENO, ": ", 2);
 		perror(av[1]);
 		exit(127);
