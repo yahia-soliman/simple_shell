@@ -7,7 +7,7 @@
  */
 unsigned int str_len(char *str)
 {
-	if (*str)
+	if (*str != '\0')
 		return (1 + str_len(str + 1));
 	return (0);
 }

@@ -24,16 +24,16 @@ int main(int ac, char **av, char **env)
 
 		memset0(ch_av, sizeof(char *) * AV_BUF);
 		r = RD_BUF;
-	while (r != EOF && r == RD_BUF)
-	{
+		while (r != EOF && r == RD_BUF)
+		{
 			memset0(rd, sizeof(char) * RD_BUF);
 			r = read(fd, rd, RD_BUF);
 			if (r < 0)
 				perror(av[0]);
 		do {
 			not_last = strtoav(rd, ch_av);
-		if (*ch_av)
-		{
+			if (*ch_av)
+			{
 				if (built_in(ch_av, env))
 					continue;
 			path = find_path(ch_av[0], env);
@@ -54,9 +54,9 @@ int main(int ac, char **av, char **env)
 			else
 				w_err(*av, *ch_av, n_cmd);
 			free_av(ch_av);
-		}
+			}
 		} while (not_last && r != EOF);
-	}
+		}
 	} while (in_mode && n_cmd++);
 
 	if (fd > 2)

@@ -10,11 +10,14 @@ int is_end(int c);
  */
 char strtoav(char *str, char **av)
 {
-	int comment = 0, n = 0, w, wi, c;
-	static int i = 0;
+	int comment = 0, n = 0, w, wi, c, len;
+	static int i = 1;
 
+	if (i == 1)
+		i = 0;
 	c = !(is_end(str[i]));
-	while (c)
+	len = RD_BUF;
+	while (i < len && c)
 	{
 		if (str[i] == '#')
 			comment = 1;
@@ -24,7 +27,7 @@ char strtoav(char *str, char **av)
 		{
 			w = i;
 			c = !(is_end(str[i]));
-			while (str[i] != ' ' && c)
+			while (i < len && str[i] != ' ' && c)
 			{
 				i++;
 				c = !(is_end(str[i]));
@@ -70,30 +73,10 @@ void free_av(char **av)
  * is_end - checks if a char is the end of command
  * @c: the character to check
  *
- * Retrun: 1 if c is end character
+ * Return: 1 if c is end character
  */
 int is_end(int c)
 {
-	/*
-	char endc[3] = {'\n', ';', '\0'};
-	char *ptr = endc;
-	int i = 0;
-
-	while (i <= 3)
-	{
-		if (c != *ptr)
-		{
-			ptr++;
-			i++;
-		}
-		else
-			break;
-	}
-
-	if (i <= 3)
-		return (1);
-	return (0);
-	*/
 	if (c == 0 || c == 10 || c == 59)
 		return (1);
 	else
