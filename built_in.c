@@ -20,21 +20,23 @@ void print_env(char **env)
 /**
  * exit_sh - exits the shell
  * @av: user input
+ * @ch_stat: return of last fork
  */
-void exit_sh(char **av)
+void exit_sh(char **av, int ch_stat)
 {
 		free_av(av);
-		exit(0);
+		exit(ch_stat);
 }
 
 /**
  * built_in - exits the shell
  * @av:	 user inputs
  * @env: environment variables
+ * @ch_stat: return of last fork
  *
  * Return: True(1) False(0)
  */
-int built_in(char **av, char **env)
+int built_in(char **av, char **env, int ch_stat)
 {
 	int i = 0;
 	char *in[] = {"exit", "env", NULL};
@@ -48,7 +50,7 @@ int built_in(char **av, char **env)
 	}
 
 	if (i == 0)
-		exit_sh(av);
+		exit_sh(av, ch_stat);
 	else if (i == 1)
 		print_env(env);
 	else

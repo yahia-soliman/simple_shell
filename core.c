@@ -1,6 +1,7 @@
 #include "main.h"
 
 void set_mode(int ac, char **av, int *mode, int *fd);
+int run_all(char *rd, char **av, char **env, int n);
 void w_err(char *sh, char *ch, int n_cmd);
 int wr_int(int n);
 
@@ -14,15 +15,14 @@ int wr_int(int n);
  */
 int main(int ac, char **av, char **env)
 {
-	char not_last = 1, *path, rd[RD_BUF] = {0}, *ch_av[AV_BUF] = {0};
-	int r = 0, fd = STDIN_FILENO, ch_id, ch_stat, in_mode = 1, n_cmd = 1;
+	char rd[RD_BUF] = {0};
+	int r = 0, in_mode = 1, n_cmd = 1, fd = STDIN_FILENO;
 
 	set_mode(ac, av, &in_mode, &fd);
 	do {
 		if (in_mode)
 			r = write(STDOUT_FILENO, "#cisfun$ ", 9);
 
-		memset0(ch_av, sizeof(char *) * AV_BUF);
 		r = RD_BUF;
 		while (r != EOF && r == RD_BUF)
 		{
@@ -30,12 +30,40 @@ int main(int ac, char **av, char **env)
 			r = read(fd, rd, RD_BUF);
 			if (r < 0)
 				perror(av[0]);
-		do {
-			not_last = strtoav(rd, ch_av);
-			if (*ch_av)
+			else
+				r = run_all(rd, av, env, n_cmd);
+		}
+	} while (in_mode && n_cmd++);
+
+	if (fd > 2)
+		close(fd);
+	return (r);
+}
+
+/**
+ * run_all - takes a string of commads and runs it
+ * @rd:            a string
+ * @av:  the name of the program in case of errors
+ * @env: the environment of the program
+ * @n_cmd:   the number of the current command
+ *
+ * Return: the last child return status
+ */
+int run_all(char *rd, char **av, char **env, int n_cmd)
+{
+	int ch_id = 0, not_last = 1;
+	static int ch_stat = 1;
+	char *path, *ch_av[AV_BUF] = {0};
+
+	memset0(ch_av, sizeof(char *) * AV_BUF);
+	do {
+		not_last = strtoav(rd, ch_av);
+		if (*ch_av)
+		{
+			if (built_in(ch_av, env, ch_stat))
+				ch_stat = 0;
+			else
 			{
-				if (built_in(ch_av, env))
-					continue;
 			path = find_path(ch_av[0], env);
 			if (path != NULL)
 			{
@@ -46,22 +74,22 @@ int main(int ac, char **av, char **env)
 					execve(path, ch_av, env);
 				else
 				{
-					wait(&ch_stat);
-					if (path != *ch_av)
-						free(path);
+				wait(&ch_stat);
+				ch_stat = ch_stat >> 8;
+				if (path != *ch_av)
+					free(path);
 				}
 			}
 			else
+			{
+				ch_stat = 127;
 				w_err(*av, *ch_av, n_cmd);
-			free_av(ch_av);
 			}
-		} while (not_last && r != EOF);
+			}
+			free_av(ch_av);
 		}
-	} while (in_mode && n_cmd++);
-
-	if (fd > 2)
-		r = close(fd);
-	return (0);
+	} while (not_last);
+	return (ch_stat);
 }
 
 /**

@@ -65,6 +65,7 @@ void free_av(char **av)
 	while (*av)
 	{
 		free(*av);
+		*av = NULL;
 		av++;
 	}
 }
