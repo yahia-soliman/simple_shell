@@ -1,3 +1,3 @@
 # simple_shell
 this is our project
-project handled a
+project handled a lot
