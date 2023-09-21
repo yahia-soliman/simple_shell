@@ -113,6 +113,7 @@ void set_mode(int ac, char **av, int *mode, int *fd)
 		write(STDERR_FILENO, av[0], str_len(av[0]));
 		write(STDERR_FILENO, ": 0: Can't open ", 16);
 		write(STDERR_FILENO, av[1], str_len(av[1]));
+		write(STDERR_FILENO, "\n", 1);
 		exit(127);
 	}
 }
