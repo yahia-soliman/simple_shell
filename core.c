@@ -111,8 +111,8 @@ void set_mode(int ac, char **av, int *mode, int *fd)
 	if (*fd < 0)
 	{
 		write(STDERR_FILENO, av[0], str_len(av[0]));
-		write(STDERR_FILENO, ": ", 2);
-		perror(av[1]);
+		write(STDERR_FILENO, ": 0: Can't open ", 16);
+		write(STDERR_FILENO, av[1], str_len(av[1]));
 		exit(127);
 	}
 }
@@ -127,17 +127,17 @@ void w_err(char *sh, char *ch, int n_cmd)
 {
 	int r;
 
-	r = write(STDOUT_FILENO, sh, str_len(sh));
+	r = write(STDERR_FILENO, sh, str_len(sh));
 	if (r > 0)
-		r = write(STDOUT_FILENO, ": ", 2);
+		r = write(STDERR_FILENO, ": ", 2);
 	if (r > 0)
 		r = wr_int(n_cmd);
 	if (r > 0)
-		r = write(STDOUT_FILENO, ": ", 2);
+		r = write(STDERR_FILENO, ": ", 2);
 	if (r > 0)
-		r = write(STDOUT_FILENO, ch, str_len(ch));
+		r = write(STDERR_FILENO, ch, str_len(ch));
 	if (r > 0)
-		r = write(STDOUT_FILENO, ": not found\n", 13);
+		r = write(STDERR_FILENO, ": not found\n", 12);
 	else
 		perror(sh);
 }
@@ -164,7 +164,7 @@ int wr_int(int n)
 	while (i >= 1)
 	{
 		c = d / i + '0';
-		r += write(STDOUT_FILENO, &c, 1);
+		r += write(STDERR_FILENO, &c, 1);
 		d %= i;
 		i /= 10;
 	}
