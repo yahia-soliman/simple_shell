@@ -40,7 +40,7 @@ char *find_path(char *av0, char **env)
 			}
 			else
 				prog = str_concat(path, av0);
-printf("(%s)\n", prog);
+
 			path[i] = was;
 			if (access(prog, X_OK) != 0)
 			{
