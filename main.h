@@ -11,7 +11,7 @@
 #include <string.h>
 
 
-#define RD_BUF 10240
+#define RD_BUF 1024
 #define AV_BUF 32
 
 

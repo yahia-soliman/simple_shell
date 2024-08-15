@@ -21,7 +21,7 @@ int main(int ac, char **av, char **env)
 	set_mode(ac, av, &in_mode, &fd);
 	do {
 		if (in_mode)
-			r = write(STDOUT_FILENO, "#cisfun$ ", 9);
+			r = write(STDOUT_FILENO, "$ish >>> ", 9);
 
 		r = RD_BUF;
 		while (r != EOF && r == RD_BUF)
